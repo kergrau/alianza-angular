@@ -1,0 +1,30 @@
+.left-sidebar {
+  flex-grow: 1;
+  padding: 1rem .5rem 0rem .5rem;
+  background-color: #F1F1F1;
+
+  h2 {
+    margin-left: 1rem;
+  }
+  
+  .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-size: 16px;
+      padding: .8rem 3rem;
+      transition: .5s ease;
+      cursor: pointer;
+    }
+
+    li.active {
+      font-weight: 600;
+      background-color: #1B9CFF;
+    }
+
+    li:hover {
+      background-color: rgba(59, 130, 246, .5);
+    }
+  }
+}

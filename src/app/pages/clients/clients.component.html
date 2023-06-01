@@ -1,0 +1,150 @@
+<p-toast></p-toast>
+<div class="container">
+	<div class="btn-actions">
+		<div class="card flex justify-content-center">
+			<p-button label="New" icon="pi pi-plus" (click)="handlerDialog()"></p-button>
+			<p-button label="Export" icon="pi pi-file-export" (click)="dt.exportCSV()"></p-button>
+		</div>
+	</div>
+
+	<div class="btn-search">
+		<div class="p-inputgroup">
+			<input
+				type="text"
+				pInputText
+				placeholder="Enter Shared Key"
+				[(ngModel)]="searchSharedKey"
+			/>
+			<button
+				type="button"
+				pButton
+				label="Search"
+				(click)="findSharedKey()"
+				[disabled]="searchSharedKey.length < 2"
+			></button>
+		</div>
+	</div>
+
+	<div class="datatable-client">
+		<h1>Clients</h1>
+		<div class="card">
+			<p-table #dt [columns]="cols" [value]="clients" [loading]="loading" dataKey="id" editMode="row" styleClass="p-datatable-striped" [tableStyle]="{ 'min-width': '50rem' }">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns">
+							{{ col.header }}
+						</th>
+						<th>Actions</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-client let-editing="editing" let-ri="rowIndex">
+					<tr [pEditableRow]="client">
+						<td>{{ client.sharedKey }}</td>
+						<td>
+							<p-cellEditor>
+								<ng-template pTemplate="input">
+									<input pInputText type="text" [(ngModel)]="client.businessId" required>
+								</ng-template>
+								<ng-template pTemplate="output">
+									{{ client.businessId }}
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td>
+							<p-cellEditor>
+								<ng-template pTemplate="input">
+									<input pInputText type="email" [(ngModel)]="client.email" required>
+								</ng-template>
+								<ng-template pTemplate="output">
+									{{ client.email }}
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td>
+							<p-cellEditor>
+								<ng-template pTemplate="input">
+									<input pInputText type="number" [(ngModel)]="client.phone" required>
+								</ng-template>
+								<ng-template pTemplate="output">
+									{{ client.phone }}
+								</ng-template>
+							</p-cellEditor>
+						</td>
+						<td>{{ client.dataAdded | date : 'dd/MM/yyyy' }}</td>
+						<td>
+							<button type="button" *ngIf="!editing" pButton pRipple pInitEditableRow icon="pi pi-user-edit" class="p-button-rounded p-button-text" pTooltip="Edit" [showDelay]="200" [hideDelay]="200"></button>
+							<button type="button" *ngIf="editing" pButton pRipple pSaveEditableRow icon="pi pi-check" class="p-button-rounded p-button-text p-button-success" (click)="updateClient(client)"></button>
+							<button type="button" *ngIf="editing" pButton pRipple pCancelEditableRow icon="pi pi-times" class="p-button-rounded p-button-text p-button-danger"></button>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+</div>
+
+<p-dialog
+	header="Create New Client"
+	[(visible)]="showDialog"
+	[style]="{ width: '25vw' }"
+	[modal]="true"
+	[resizable]="false"
+	[draggable]="false"
+>
+	<ng-template pTemplate="header">
+		<h1 class="text-xl font-bold">Create New Client</h1>
+	</ng-template>
+
+	<form [formGroup]="clientForm">
+		<div class="input-form">
+			<label for="name">Name *</label>
+			<input
+				type="text"
+				pInputText
+				class="p-inputtext-sm"
+				name="name"
+				formControlName="name"
+				required
+			/>
+		</div>
+		<div class="input-form">
+			<label for="lastname">Lastname *</label>
+			<input
+				type="text"
+				pInputText
+				class="p-inputtext-sm"
+				name="lastname"
+				formControlName="lastname"
+				required
+			/>
+		</div>
+		<div class="input-form">
+			<label for="email">E-mail *</label>
+			<input
+				type="email"
+				pInputText
+				class="p-inputtext-sm"
+				name="email"
+				formControlName="email"
+				required
+			/>
+		</div>
+		<div class="input-form">
+			<label for="phone">Phone *</label>
+			<input
+				type="number"
+				pInputText
+				pKeyFilter="int"
+				class="p-inputtext-sm"
+				name="phone"
+				formControlName="phone"
+				required
+			/>
+		</div>
+	</form>
+	<ng-template pTemplate="footer">
+		<button type="submit" pButton pRipple [disabled]="!clientForm.valid" (click)="submit()">
+			OK
+		</button>
+	</ng-template>
+</p-dialog>

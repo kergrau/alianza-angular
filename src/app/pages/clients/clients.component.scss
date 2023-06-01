@@ -1,0 +1,41 @@
+.example-container {
+    width: 500px;
+    height: 3;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+  }
+
+  .btn-actions {
+    margin-bottom: 2rem;
+
+    p-button {
+      margin-right: 1rem;
+    }
+  }
+
+  .btn-search {
+    margin-bottom: 4rem;
+  }
+
+  form {
+    text-align: center;
+
+    .input-form {
+      font-size: 18px;
+      margin-bottom: 1rem;
+      
+      label {
+        margin-right: .8rem;
+      }
+    }
+  }
